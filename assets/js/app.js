@@ -1,3 +1,4 @@
+$(document).ready(function () {
 
 
 var cats = ["black cats", "orange cats", "fat cats", "scottish folds", "lazy cats"]
@@ -35,18 +36,35 @@ $("button").on("click", function() {
         for (var i = 0; i < results.length; i++) {
             var catsDiv = $("<div>");
             var p = $("<p>").text("Rating: " + results[i].rating);
-            var catImgage = $("<img>");
+            var catGif = $("<img>");
 
-            catImgage.attr("src", results[i].images.original_still.url);
-            catImgage.attr("data-still", results[i].images.original_still.url);
-            catImgage.attr("data-animate", results[i].images.original.url);
-            catImgage.attr("data-state", "still");
-            catImgage.attr("class", "gif");
+            catGif.attr("src", results[i].images.original_still.url);
+            catGif.attr("data-still", results[i].images.original_still.url);
+            catGif.attr("data-animate", results[i].images.original.url);
+            catGif.attr("data-state", "still");
+            catGif.attr("class", "gif");
             catsDiv.append(p);
-            catsDiv.append(catImgage);
+            catsDiv.append(catGif);
             $("#cat-gifs").append(catsDiv);
         }
     });
 });
 
-// MNnIOkvCzoC20UGpgg9R1SmGixjSCZd2
+$(document).on("click", ".gif", function() {
+    console.log("clicked gif")
+    // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+    var state = $(this).attr("data-state");
+    // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+    // Then, set the image's data-state to animate
+    // Else set src to the data-still value
+    if (state === "still") {
+      $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate");
+    } else {
+      $(this).attr("src", $(this).attr("data-still"));
+      $(this).attr("data-state", "still");
+    }
+  });
+
+
+});
