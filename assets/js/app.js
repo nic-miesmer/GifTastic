@@ -4,11 +4,11 @@ $(document).ready(function () {
 var cats = ["black cats", "orange cats", "fat cats", "scottish folds", "lazy cats"]
 
 
-var displayButtons = function() {
+
+var displayButtons = function displayButtons() {
     // empty the div of buttons so when we add more,
     // it doesn't just add all of them again, and the new one.
     $("#gif-buttons").empty();
-
     //display buttons to page
     for(var i = 0; i < cats.length; i++){
         console.log("adding: " + cats[i] + " button")
@@ -17,8 +17,18 @@ var displayButtons = function() {
 
 }
 
+
+
+
+//////////Script///////
 displayButtons();
 
+
+
+
+
+
+//Click Events//////
 
 //click a button to get still gifs
 $("button").on("click", function() {
@@ -27,10 +37,7 @@ $("button").on("click", function() {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     cat + "&api_key="+ apiKey + "&limit=10";
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
+    $.get(queryURL).done(function (response) {
         var results = response.data;
         $("#cat-gifs").empty();
         for (var i = 0; i < results.length; i++) {
@@ -47,8 +54,10 @@ $("button").on("click", function() {
             catsDiv.append(catGif);
             $("#cat-gifs").append(catsDiv);
         }
-    });
-});
+    })
+})
+
+
 
 $(document).on("click", ".gif", function() {
     console.log("clicked gif")
@@ -64,7 +73,10 @@ $(document).on("click", ".gif", function() {
       $(this).attr("src", $(this).attr("data-still"));
       $(this).attr("data-state", "still");
     }
-  });
+  })
 
 
-});
+
+
+
+})
