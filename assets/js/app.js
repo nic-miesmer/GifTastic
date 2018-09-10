@@ -1,27 +1,41 @@
 $(document).ready(function () {
 
 
-var cats = ["black cats", "orange cats", "fat cats", "scottish folds", "lazy cats"]
+var catsArray = ["black cats", "orange cats", "fat cats", "scottish folds", "lazy cats"]
 
 
 
 var displayButtons = function displayButtons() {
+    console.log("displayButtons")
     // empty the div of buttons so when we add more,
     // it doesn't just add all of them again, and the new one.
     $("#gif-buttons").empty();
     //display buttons to page
-    for(var i = 0; i < cats.length; i++){
-        console.log("adding: " + cats[i] + " button")
-        $("#gif-buttons").append("<button data-cat='" + cats[i] + "'>" + cats[i] + "</button>");
+    for(var i = 0; i < catsArray.length; i++){
+        console.log("adding: " + catsArray[i] + " button")
+        $("#gif-buttons").append("<button data-cat='" + catsArray[i] + "'>" + catsArray[i] + "</button>");
     }
 
 }
 
-
-
-
 //////////Script///////
 displayButtons();
+
+
+
+$("#add-cats").on("click", function(){
+    // event.preventDefault.Default();
+    var cat = $("#new-cat").val().trim();
+
+    console.log(cat);
+    // catsArray.push(cat);
+    // displayButtons();
+
+})
+
+
+
+
 
 
 
@@ -32,6 +46,7 @@ displayButtons();
 
 //click a button to get still gifs
 $("button").on("click", function() {
+    console.log("button click");
     var cat = $(this).attr("data-cat");
     var apiKey= "MNnIOkvCzoC20UGpgg9R1SmGixjSCZd2"
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
