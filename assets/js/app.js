@@ -1,8 +1,4 @@
-$(document).ready(function () {
-
-
 var catsArray = ["black cats", "orange cats", "fat cats", "scottish folds", "lazy cats"]
-
 
 
 var displayButtons = function displayButtons() {
@@ -13,7 +9,8 @@ var displayButtons = function displayButtons() {
     //display buttons to page
     for(var i = 0; i < catsArray.length; i++){
         console.log("adding: " + catsArray[i] + " button")
-        $("#gif-buttons").append("<button data-cat='" + catsArray[i] + "'>" + catsArray[i] + "</button>");
+        $("#gif-buttons").attr("class", "gif-button");
+        $("#gif-buttons").append("<button class= gif-button data-cat='" + catsArray[i] + "'>" + catsArray[i] + "</button>");
     }
 
 }
@@ -22,39 +19,23 @@ var displayButtons = function displayButtons() {
 displayButtons();
 
 
-
-$("#add-cats").on("click", function(){
-    // event.preventDefault.Default();
-    var cat = $("#new-cat").val().trim();
-
-    console.log(cat);
-    // catsArray.push(cat);
-    // displayButtons();
-
-})
-
-
-
-
-
-
-
-
-
-
 //Click Events//////
 
 //click a button to get still gifs
 $("button").on("click", function() {
     console.log("button click");
-    var cat = $(this).attr("data-cat");
+    console.log("data cat data: " +$(this).attr("data-cat"))
+    var cat = $(this).attr("data-cat")
     var apiKey= "MNnIOkvCzoC20UGpgg9R1SmGixjSCZd2"
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     cat + "&api_key="+ apiKey + "&limit=10";
 
+    console.log(queryURL)
     $.get(queryURL).done(function (response) {
         var results = response.data;
         $("#cat-gifs").empty();
+
+        console.log("Show Gifs for " + cat)
         for (var i = 0; i < results.length; i++) {
             var catsDiv = $("<div>");
             var p = $("<p>").text("Rating: " + results[i].rating);
@@ -73,6 +54,23 @@ $("button").on("click", function() {
 })
 
 
+$("#submit").on("click", function(){
+    event.preventDefault();
+    var cat = $("#new-cat").val().trim();
+
+    console.log(cat);
+    var newLength =catsArray.push(cat);
+
+
+    $("#gif-buttons").attr("class", "gif-button");
+    $("#gif-buttons").append("<button class= gif-button data-cat='" + catsArray[newLength -1 ] + "'>" + catsArray[newLength -1 ] + "</button>");
+})
+
+    //Re-display new buttons
+    // displayButtons();
+
+
+
 
 $(document).on("click", ".gif", function() {
     console.log("clicked gif")
@@ -89,9 +87,5 @@ $(document).on("click", ".gif", function() {
       $(this).attr("data-state", "still");
     }
   })
-
-
-
-
 
 })
